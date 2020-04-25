@@ -35,7 +35,6 @@ export default class Board extends React.Component{
   }
 
   onDragStart = (key) => {
-    console.log(key)
     this.setState({
       movingKey: key
     })
@@ -43,7 +42,6 @@ export default class Board extends React.Component{
 
   onDragOver = (e, value) => {
     e.preventDefault();
-    console.log(value);
     const { tasks, movingKey } = this.state;
     let newTasks = tasks.filter(task => {
       if(task.key === movingKey)
@@ -72,13 +70,13 @@ export default class Board extends React.Component{
     })
     return(
       <Container>
-        <Droppable bgcolor='black' onDragOver={this.onDragOver} value='todo'>
+        <Droppable bgcolor='black' onDragOver={this.onDragOver} value='todo' headerText='Todo'>
           {tasksCards.todo}
         </Droppable>
-        <Droppable bgcolor='black' onDragOver={this.onDragOver} value='wip'>
+        <Droppable bgcolor='black' onDragOver={this.onDragOver} value='wip' headerText='Work In Progress'>
           {tasksCards.wip}
         </Droppable>
-        <Droppable bgcolor='black' onDragOver={this.onDragOver} value='done'>
+        <Droppable bgcolor='black' onDragOver={this.onDragOver} value='done' headerText='Done'>
           {tasksCards.done}
         </Droppable>
       </Container>

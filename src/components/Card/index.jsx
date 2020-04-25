@@ -4,7 +4,7 @@ import { Container } from './style'
 
 const Card = (props) => {
   return(
-    <Container backgroundColor={props.bgColor} textColor={props.textColor}>
+    <Container>
       {props.children}
     </Container>
   )
