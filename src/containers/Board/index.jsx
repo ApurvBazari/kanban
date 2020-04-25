@@ -14,20 +14,32 @@ export default class Board extends React.Component{
         {
           name:"Learn Angular",
           status:"todo",
-          bgcolor: "yellow",
           key: 1
         },
         {
-          name:"React",
+          name:"Learn React",
           status:"wip",
-          bgcolor:"pink",
           key: 2
         },
         {
-          name:"Vue",
+          name:"Learn Vue",
           status:"done",
-          bgcolor:"skyblue",
           key: 3
+        },
+        {
+          name:"Learn Node",
+          status:"done",
+          key: 4
+        },
+        {
+          name:"Learn ES6",
+          status:"done",
+          key: 5
+        },
+        {
+          name:"Learn Postgres",
+          status:"done",
+          key: 6
         }
       ],
       movingKey: null
@@ -35,6 +47,7 @@ export default class Board extends React.Component{
   }
 
   onDragStart = (key) => {
+    console.log('Started Dragging')
     this.setState({
       movingKey: key
     })
@@ -42,20 +55,29 @@ export default class Board extends React.Component{
 
   onDragOver = (e, value) => {
     e.preventDefault();
-    const { tasks, movingKey } = this.state;
-    let newTasks = tasks.filter(task => {
-      if(task.key === movingKey)
+    console.log('Drag Over')
+    let newTasks = this.state.tasks.filter(task => {
+      if(task.key === this.state.movingKey){
         task.status = value;
+      }
       return task
     })
     this.setState({
-      ...this.state,
-      tasks: newTasks
+      tasks: newTasks,
+      isDragging: value
+    })
+  }
+
+  dragEnd = () => {
+    console.log('Finished dragging ')
+    this.setState({
+      isDragging: false,
+      movingKey: null
     })
   }
 
   render() {
-    const { tasks } = this.state;
+    const { tasks, isDragging } = this.state;
     let tasksCards = {
       wip: [],
       done: [],
@@ -63,20 +85,20 @@ export default class Board extends React.Component{
     };
     tasks.forEach(task => {
       tasksCards[task.status].push(
-        <Draggable value={task.key} onDragStart={this.onDragStart}>
+        <Draggable value={task.key} onDragStart={this.onDragStart} dragEnd={this.dragEnd}>
           <Card bgColor={task.bgcolor}>{task.name}</Card>
         </Draggable>
       )
     })
     return(
       <Container>
-        <Droppable bgcolor='black' onDragOver={this.onDragOver} value='todo' headerText='Todo'>
+        <Droppable taskHover={isDragging === 'todo'} bgcolor='black' onDragOver={this.onDragOver} value='todo' headerText='Todo'>
           {tasksCards.todo}
         </Droppable>
-        <Droppable bgcolor='black' onDragOver={this.onDragOver} value='wip' headerText='Work In Progress'>
+        <Droppable taskHover={isDragging === 'wip'} bgcolor='black' onDragOver={this.onDragOver} value='wip' headerText='Work In Progress'>
           {tasksCards.wip}
         </Droppable>
-        <Droppable bgcolor='black' onDragOver={this.onDragOver} value='done' headerText='Done'>
+        <Droppable taskHover={isDragging === 'done'} bgcolor='black' onDragOver={this.onDragOver} value='done' headerText='Done'>
           {tasksCards.done}
         </Droppable>
       </Container>
