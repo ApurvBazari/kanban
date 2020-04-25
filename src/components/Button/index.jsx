@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { Button } from './style'
+import { Container } from './style'
 
-const MyButton = (props) => {
+const Button = (props) => {
   return (
-    <Button color={props.color}>{props.children}</Button>
+    <Container color={props.color} onClick={props.onClick}>{props.children}</Container>
   )
 }
 
-export default MyButton
+export default Button;

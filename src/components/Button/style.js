@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
-export const Button = styled.button`
-  width: 50px;
-  height: 200px;
+export const Container = styled.button`
+  height: 50px;
+  width: 200px;
   color: ${props => props.color}
 `
