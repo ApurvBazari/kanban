@@ -8,7 +8,7 @@ export const Container = styled.button`
   font-weight: 600;
   font-size: 14px;
   border-radius: 5px;
-  margin-left: ${props => `${props.marginLeft}px` || 0};
+  margin-left: ${props => `${props.marginLeft}px`};
   &:hover {
     opacity: 0.8;
   }
