@@ -12,3 +12,10 @@ export const Container = styled.div`
   align-items: center;
   padding-left: 10px;
 `
+
+export const Edit = styled.div`
+  display: flex;
+  position: absolute;
+  right: 10px;
+  justify-content: space-between;
+`;

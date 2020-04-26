@@ -2,8 +2,13 @@ import React, {useState, useEffect} from 'react'
 
 import Input from '../Input'
 import Button from '../Button'
+import Image from '../Image'
 
-import { Container } from './style'
+import DeleteIcon from '../../icons/delete.png'
+import EditIcon from '../../icons/edit.png'
+import DoneIcon from '../../icons/done.png'
+
+import { Container, Edit } from './style'
 
 const Card = (props) => {
   const [isHover, setHover] = useState(false);
@@ -22,12 +27,19 @@ const Card = (props) => {
         name
       }
       {(isHover || props.isEditing) && 
-        <Button
-          color={props.isEditing ? 'lightblue' : 'lightgreen'}
-          onClick={() => props.isEditing ? props.saveEdit(name) : props.editTask(props.value)}
-        >
-          {props.isEditing ? 'Save' : 'Edit'}
-        </Button>
+        <Edit>
+          <Button
+            color={props.isEditing ? 'lightblue' : 'lightgreen'}
+            onClick={() => props.isEditing ? props.saveEdit(name) : props.editTask(props.value)}
+          >
+            <Image src={props.isEditing ? DoneIcon : EditIcon} alt='' width={20} height={20} />
+          </Button>
+          {!props.isEditing && (
+            <Button color='red' onClick={() => props.onDelete(props.value)} marginLeft={5}>
+              <Image src={DeleteIcon} alt='' width={20} height={20} />
+            </Button>
+          )}
+        </Edit>
       }
     </Container>
   )

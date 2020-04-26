@@ -97,6 +97,14 @@ export default class Board extends React.Component{
     })
   }
 
+  onDelete = key => {
+    const { tasks } = this.state;
+    let newTasks = tasks.filter(task => task.key !== key)
+    this.setState({
+      tasks: newTasks
+    })
+  }
+
   render() {
     const { tasks, isDragging, editTaskKey } = this.state;
     let tasksCards = {
@@ -113,6 +121,7 @@ export default class Board extends React.Component{
             name={task.name}
             saveEdit={this.saveEdit}
             editTask={this.editTask}
+            onDelete={this.onDelete}
           />
         </Draggable>
       )
