@@ -3,7 +3,6 @@ import React from 'react'
 import Card from '../../components/Card'
 import Draggable from '../../components/Drag'
 import Droppable from '../../components/Drop'
-import Input from '../../components/Input'
 
 import { Container } from './style'
 
@@ -44,7 +43,7 @@ export default class Board extends React.Component{
         }
       ],
       movingKey: null,
-      editTask: null
+      editTaskKey: null
     }
   }
 
@@ -81,25 +80,25 @@ export default class Board extends React.Component{
 
   editTask = key => {
     console.log('Edit task', key)
-    this.setState({editTask: key})
+    this.setState({editTaskKey: key})
   }
 
   saveEdit = name => {
-    const { tasks, editTask } = this.state
+    const { tasks, editTaskKey } = this.state
     let newTasks = tasks.filter(task => {
-      if(task.key === editTask){
+      if(task.key === editTaskKey){
         task.name = name;
       }
       return task
     })
     this.setState({
-      editTask: null,
+      editTaskKey: null,
       tasks: newTasks
     })
   }
 
   render() {
-    const { tasks, isDragging, editTask } = this.state;
+    const { tasks, isDragging, editTaskKey } = this.state;
     let tasksCards = {
       wip: [],
       done: [],
@@ -110,7 +109,7 @@ export default class Board extends React.Component{
         <Draggable value={task.key} onDragStart={this.onDragStart} dragEnd={this.dragEnd}>
           <Card
             value={task.key}
-            isEditing={editTask === task.key}
+            isEditing={editTaskKey === task.key}
             name={task.name}
             saveEdit={this.saveEdit}
             editTask={this.editTask}

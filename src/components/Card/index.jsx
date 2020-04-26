@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 import Input from '../Input'
 
@@ -6,7 +6,10 @@ import { Container, Edit } from './style'
 
 const Card = (props) => {
   const [isHover, setHover] = useState(false);
-  const [name, updateName] = useState(props.name)
+  const [name, updateName] = useState(props.name);
+  useEffect(() => {
+    updateName(props.name)
+  },[props.name])
   return(
     <Container onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
       {props.isEditing ?
