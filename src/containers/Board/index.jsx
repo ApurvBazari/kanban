@@ -1,9 +1,12 @@
+/** Absolute Imports Here */
 import React from 'react'
 
+/** Components Imports Here */
 import Card from '../../components/Card'
 import Draggable from '../../components/Drag'
 import Droppable from '../../components/Drop'
 
+/** Styles Imports Here */
 import { Container } from './style'
 
 export default class Board extends React.Component{
@@ -42,19 +45,19 @@ export default class Board extends React.Component{
           key: 6
         }
       ],
-      movingKey: null,
-      editTaskKey: null
+      movingKey: null, // Keeps track of task key being dragged
+      editTaskKey: null // Keeps track of task being edited
     }
   }
 
+  /** Sets the movingKey to the task key being dragged */
   onDragStart = (key) => {
-    console.log('Started Dragging')
     this.setState({ movingKey: key })
   }
 
+  /** Changes the status of the dragged card to the column value */
   onDragOver = (e, value) => {
     e.preventDefault();
-    console.log('Drag Over');
     const { tasks, movingKey } = this.state
     let newTasks = tasks.filter(task => {
       if(task.key === movingKey){
@@ -65,16 +68,17 @@ export default class Board extends React.Component{
     this.setState({ tasks: newTasks })
   }
 
+  /** Updates when the drag/drop is done */
   dragEnd = () => {
-    console.log('Finished dragging ')
     this.setState({ movingKey: null })
   }
 
+  /** Sets the editTaskKey to the task key being edited */
   editTask = key => {
-    console.log('Edit task', key)
     this.setState({ editTaskKey: key })
   }
 
+  /** Updates the task name being edited */
   saveEdit = name => {
     const { tasks, editTaskKey } = this.state
     let newTasks = tasks.filter(task => {
@@ -89,12 +93,14 @@ export default class Board extends React.Component{
     })
   }
 
+  /** Deletes the task based on key being passed */
   onDelete = key => {
     const { tasks } = this.state;
     let newTasks = tasks.filter(task => task.key !== key)
     this.setState({ tasks: newTasks })
   }
 
+  /** Creates new empty task for the column based on status(column value) passed */
   onAddItem = status => {
     const { tasks } = this.state;
     const newTask = {
