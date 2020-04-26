@@ -3,6 +3,7 @@ import React from 'react'
 import Card from '../../components/Card'
 import Draggable from '../../components/Drag'
 import Droppable from '../../components/Drop'
+import Input from '../../components/Input'
 
 import { Container } from './style'
 
@@ -42,7 +43,8 @@ export default class Board extends React.Component{
           key: 6
         }
       ],
-      movingKey: null
+      movingKey: null,
+      editTask: null
     }
   }
 
@@ -55,9 +57,10 @@ export default class Board extends React.Component{
 
   onDragOver = (e, value) => {
     e.preventDefault();
-    console.log('Drag Over')
-    let newTasks = this.state.tasks.filter(task => {
-      if(task.key === this.state.movingKey){
+    console.log('Drag Over');
+    const { tasks, movingKey } = this.state
+    let newTasks = tasks.filter(task => {
+      if(task.key === movingKey){
         task.status = value;
       }
       return task
@@ -76,8 +79,27 @@ export default class Board extends React.Component{
     })
   }
 
+  editTask = key => {
+    console.log('Edit task', key)
+    this.setState({editTask: key})
+  }
+
+  saveEdit = name => {
+    const { tasks, editTask } = this.state
+    let newTasks = tasks.filter(task => {
+      if(task.key === editTask){
+        task.name = name;
+      }
+      return task
+    })
+    this.setState({
+      editTask: null,
+      tasks: newTasks
+    })
+  }
+
   render() {
-    const { tasks, isDragging } = this.state;
+    const { tasks, isDragging, editTask } = this.state;
     let tasksCards = {
       wip: [],
       done: [],
@@ -86,7 +108,13 @@ export default class Board extends React.Component{
     tasks.forEach(task => {
       tasksCards[task.status].push(
         <Draggable value={task.key} onDragStart={this.onDragStart} dragEnd={this.dragEnd}>
-          <Card bgColor={task.bgcolor}>{task.name}</Card>
+          <Card
+            value={task.key}
+            isEditing={editTask === task.key}
+            name={task.name}
+            saveEdit={this.saveEdit}
+            editTask={this.editTask}
+          />
         </Draggable>
       )
     })
