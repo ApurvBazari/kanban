@@ -105,6 +105,20 @@ export default class Board extends React.Component{
     })
   }
 
+  onAddItem = status => {
+    const { tasks } = this.state;
+    const newTask = {
+      name:"",
+      status: status,
+      key: tasks[tasks.length - 1].key + 1
+    }
+    tasks.push(newTask)
+    this.setState({
+      tasks: tasks,
+      editTaskKey: newTask.key
+    })
+  }
+
   render() {
     const { tasks, isDragging, editTaskKey } = this.state;
     let tasksCards = {
@@ -128,13 +142,13 @@ export default class Board extends React.Component{
     })
     return(
       <Container>
-        <Droppable taskHover={isDragging === 'todo'} bgcolor='black' onDragOver={this.onDragOver} value='todo' headerText='Todo'>
+        <Droppable taskHover={isDragging === 'todo'} onDragOver={this.onDragOver} onAddItem={this.onAddItem} value='todo' headerText='Todo'>
           {tasksCards.todo}
         </Droppable>
-        <Droppable taskHover={isDragging === 'wip'} bgcolor='black' onDragOver={this.onDragOver} value='wip' headerText='Work In Progress'>
+        <Droppable taskHover={isDragging === 'wip'} onDragOver={this.onDragOver} onAddItem={this.onAddItem} value='wip' headerText='Work In Progress'>
           {tasksCards.wip}
         </Droppable>
-        <Droppable taskHover={isDragging === 'done'} bgcolor='black' onDragOver={this.onDragOver} value='done' headerText='Done'>
+        <Droppable taskHover={isDragging === 'done'} onDragOver={this.onDragOver} onAddItem={this.onAddItem} value='done' headerText='Done'>
           {tasksCards.done}
         </Droppable>
       </Container>

@@ -26,8 +26,9 @@ export const Header = styled.div`
 export const Footer = styled.div`
   border-radius: 5px;
   color: #5e6c84;
-  padding: 0 10px 10px 5px;
-  margin: 2px 10px 10px 10px;
+  padding: 5px 0;
+  text-align: center;
+  margin: 10px;
   cursor: pointer;
   &:hover {
     background-color: rgba(9,30,66,.08);

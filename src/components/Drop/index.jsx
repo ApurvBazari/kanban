@@ -8,7 +8,7 @@ const Droppable = (props) => {
       <Column>
         <Header>{props.headerText}</Header>
         <DropArea>{props.children}</DropArea>
-        <Footer>Add a card ...</Footer>
+        <Footer onClick={() => props.onAddItem(props.value)}>+    Add a card...</Footer>
       </Column>
     </Container>
   )
