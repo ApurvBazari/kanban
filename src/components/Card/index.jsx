@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
 
 import Input from '../Input'
+import Button from '../Button'
 
-import { Container, Edit } from './style'
+import { Container } from './style'
 
 const Card = (props) => {
   const [isHover, setHover] = useState(false);
@@ -21,9 +22,12 @@ const Card = (props) => {
         name
       }
       {(isHover || props.isEditing) && 
-        <Edit onClick={() => props.isEditing ? props.saveEdit(name) : props.editTask(props.value)}>
+        <Button
+          color={props.isEditing ? 'lightblue' : 'lightgreen'}
+          onClick={() => props.isEditing ? props.saveEdit(name) : props.editTask(props.value)}
+        >
           {props.isEditing ? 'Save' : 'Edit'}
-        </Edit>
+        </Button>
       }
     </Container>
   )
