@@ -11,6 +11,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   padding-left: 10px;
+  transform: ${props => props.isDragging ? `rotate(3deg)` : `none`};
 `
 
 export const Edit = styled.div`

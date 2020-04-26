@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  display: block;
-  height: 100%;
+  display: flex;
+  height: calc(100vh - 80px);
 `;

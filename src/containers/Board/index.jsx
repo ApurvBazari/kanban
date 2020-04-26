@@ -12,33 +12,33 @@ export default class Board extends React.Component{
     this.state = {
       tasks: [
         {
-          name:"Learn Angular",
+          name:"Task 1",
           status:"todo",
           key: 1
         },
         {
-          name:"Learn React",
+          name:"Task 2",
           status:"wip",
           key: 2
         },
         {
-          name:"Learn Vue",
+          name:"Task 4",
           status:"done",
           key: 3
         },
         {
-          name:"Learn Node",
-          status:"done",
+          name:"Task 3",
+          status:"todo",
           key: 4
         },
         {
-          name:"Learn ES6",
+          name:"Task 5",
           status:"done",
           key: 5
         },
         {
-          name:"Learn Postgres",
-          status:"done",
+          name:"Task 6",
+          status:"wip",
           key: 6
         }
       ],
@@ -49,9 +49,7 @@ export default class Board extends React.Component{
 
   onDragStart = (key) => {
     console.log('Started Dragging')
-    this.setState({
-      movingKey: key
-    })
+    this.setState({ movingKey: key })
   }
 
   onDragOver = (e, value) => {
@@ -64,23 +62,17 @@ export default class Board extends React.Component{
       }
       return task
     })
-    this.setState({
-      tasks: newTasks,
-      isDragging: value
-    })
+    this.setState({ tasks: newTasks })
   }
 
   dragEnd = () => {
     console.log('Finished dragging ')
-    this.setState({
-      isDragging: false,
-      movingKey: null
-    })
+    this.setState({ movingKey: null })
   }
 
   editTask = key => {
     console.log('Edit task', key)
-    this.setState({editTaskKey: key})
+    this.setState({ editTaskKey: key })
   }
 
   saveEdit = name => {
@@ -100,9 +92,7 @@ export default class Board extends React.Component{
   onDelete = key => {
     const { tasks } = this.state;
     let newTasks = tasks.filter(task => task.key !== key)
-    this.setState({
-      tasks: newTasks
-    })
+    this.setState({ tasks: newTasks })
   }
 
   onAddItem = status => {
@@ -120,7 +110,7 @@ export default class Board extends React.Component{
   }
 
   render() {
-    const { tasks, isDragging, editTaskKey } = this.state;
+    const { tasks, editTaskKey, movingKey } = this.state;
     let tasksCards = {
       wip: [],
       done: [],
@@ -128,7 +118,7 @@ export default class Board extends React.Component{
     };
     tasks.forEach(task => {
       tasksCards[task.status].push(
-        <Draggable value={task.key} onDragStart={this.onDragStart} dragEnd={this.dragEnd}>
+        <Draggable key={task.key} value={task.key} onDragStart={this.onDragStart} onDragEnd={this.dragEnd}>
           <Card
             value={task.key}
             isEditing={editTaskKey === task.key}
@@ -136,19 +126,20 @@ export default class Board extends React.Component{
             saveEdit={this.saveEdit}
             editTask={this.editTask}
             onDelete={this.onDelete}
+            isDragging={task.key === movingKey}
           />
         </Draggable>
       )
     })
     return(
       <Container>
-        <Droppable taskHover={isDragging === 'todo'} onDragOver={this.onDragOver} onAddItem={this.onAddItem} value='todo' headerText='Todo'>
+        <Droppable onDrop={this.dragEnd} onDragOver={this.onDragOver} onAddItem={this.onAddItem} value='todo' headerText='Todo'>
           {tasksCards.todo}
         </Droppable>
-        <Droppable taskHover={isDragging === 'wip'} onDragOver={this.onDragOver} onAddItem={this.onAddItem} value='wip' headerText='Work In Progress'>
+        <Droppable onDrop={this.dragEnd} onDragOver={this.onDragOver} onAddItem={this.onAddItem} value='wip' headerText='Work In Progress'>
           {tasksCards.wip}
         </Droppable>
-        <Droppable taskHover={isDragging === 'done'} onDragOver={this.onDragOver} onAddItem={this.onAddItem} value='done' headerText='Done'>
+        <Droppable onDrop={this.dragEnd} onDragOver={this.onDragOver} onAddItem={this.onAddItem} value='done' headerText='Done'>
           {tasksCards.done}
         </Droppable>
       </Container>

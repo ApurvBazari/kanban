@@ -5,7 +5,7 @@ const Draggable = (props) => {
     <div
       draggable
       onDragStart={() => props.onDragStart(props.value)}
-      onDragEnd={props.dragEnd}  
+      onDragEnd={props.onDragEnd}  
     >
       {props.children}
     </div>

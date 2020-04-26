@@ -4,7 +4,7 @@ import { Container, Header, Footer, DropArea, Column } from './style'
 
 const Droppable = (props) => {
   return(
-    <Container onDragOver={(e) => props.onDragOver(e, props.value)}>
+    <Container onDragOver={(e) => props.onDragOver(e, props.value)} onDrop={props.onDrop}>
       <Column>
         <Header>{props.headerText}</Header>
         <DropArea>{props.children}</DropArea>

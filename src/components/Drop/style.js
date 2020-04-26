@@ -4,7 +4,7 @@ export const Column = styled.div`
   background-color: #ebecf0;
   border-radius: 5px;
   box-sizing: border-box;
-  max-height: 90%;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
 `;
@@ -37,5 +37,5 @@ export const Footer = styled.div`
 
 export const DropArea = styled.div`
   overflow-y: auto;
-  padding: 0 10px;
+  padding: 10px;
 `;

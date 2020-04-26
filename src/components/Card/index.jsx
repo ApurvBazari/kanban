@@ -17,7 +17,7 @@ const Card = (props) => {
     updateName(props.name)
   },[props.name])
   return(
-    <Container onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+    <Container onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} isDragging={props.isDragging}>
       {props.isEditing ?
         <Input
           value={name}

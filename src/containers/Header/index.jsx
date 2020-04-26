@@ -1,11 +1,12 @@
 import React from 'react'
 
+import { Container } from './style'
 export default class Header extends React.Component{
   render() {
     return(
-      <div>
+      <Container>
         Kanban Board
-      </div>
+      </Container>
     )
   }
 }
